@@ -1,5 +1,5 @@
 # Flask
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 # Validators
 from utils.validators import Validate
@@ -27,13 +27,14 @@ def create_news():
 
     Return a success message if the data is correct otherwise return an error message.
     """
-    try:
+    try: 
         data = request.json
         val = validate.val_create_news(data)
 
         if val['status'] == 200:
             res = query.createNews(data)
             return {'message':res}
+            
         else:
             return val
 
