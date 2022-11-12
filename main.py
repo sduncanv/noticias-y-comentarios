@@ -1,11 +1,13 @@
 # Flask
-from flask import Flask, request, render_template
+from flask import Flask, request
 
 # Validators
 from utils.validators import Validate
 
 # Querys
 from clases.query import Query
+
+from clases import database
 
 
 validate = Validate()
