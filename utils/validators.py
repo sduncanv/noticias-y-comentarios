@@ -100,3 +100,15 @@ class Validate:
             return { 'status': 200 }
         else:
             return { 'Error': 'Verifique el título', 'status': 400 }
+
+
+    def add_comment(self, data):
+
+        comment = len(data['content_comment'])
+        news_id = data['news_id']
+
+        if comment > 0 and news_id > 0:
+            return { 'status': 200 }
+
+        else:
+            return { 'Error': 'Contenido del comentario vacío', 'status': 400 }

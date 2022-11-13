@@ -67,7 +67,8 @@ def read_news():
             return val
 
     except Exception as e:
-        return {'Error': str(e)}
+        print(e)
+        #return {'Error': str(e)}
 
 
 @app.route('/news/update', methods=['PUT'])
@@ -118,6 +119,24 @@ def delete_news():
             return { 'message': res }
 
     except Exception as e:
+        return {'Error': str(e)}
+
+
+@app.route('/news/comment', methods=['GET', 'POST'])
+def add_comment():
+    try:
+        if request.method == 'POST':
+            data = request.json
+            val = validate.add_comment(data)
+
+            if val['status'] == 200:
+                res = query.createComment(data)
+                
+                return { 'message': res }
+
+
+    except Exception as e:
+        print(f' +++++ {e}')
         return {'Error': str(e)}
 
 

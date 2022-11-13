@@ -26,4 +26,4 @@ class Comment(Base):
     news_id = Column(Integer(), ForeignKey('news.id'))
 
     def __str__(self):
-        return self.title
+        return self.id

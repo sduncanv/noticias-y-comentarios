@@ -1,11 +1,14 @@
 from clases.database import Database
 from Models.news import News as modelNews
+from Models.news import Comment as modelComment
+from flask import jsonify
+db = Database()
+
 
 class Query:
 
     def createNews(self, data):
     
-        db = Database()
         news_exists = db.session.query(modelNews).filter(
             modelNews.title == data['title']
         ).first()
@@ -23,15 +26,17 @@ class Query:
 
     def readNews(self, data):
 
-        db = Database()
         news_to_read = db.session.query(modelNews).filter(
             modelNews.title == data['title']
         ).first()
 
         if news_to_read != None:
+            #list = [com.content_comment for com in news_to_read.comments]
+            #print(f' ++++ {list}')
             return {
                 'title': news_to_read.title,
-                'content': news_to_read.content
+                'content': news_to_read.content,
+                'comments': [com.content_comment for com in news_to_read.comments]
             }
 
         else:
@@ -62,15 +67,15 @@ class Query:
 
     def deleteNews(self, data):
 
-        db = Database()
         news_to_delete = db.session.query(modelNews).filter(
             modelNews.title == data['title']
         ).first()
 
         if news_to_delete != None:
-            db.session.query(modelNews).filter(
-                modelNews.title == data['title']
-            ).delete()
+            # db.session.query(modelNews).filter(
+            #     modelNews.title == data['title']
+            # ).delete()
+            db.session.delete(news_to_delete)
             db.session.commit()
             db.session.close()
 
@@ -78,3 +83,24 @@ class Query:
 
         else:
             return 'La oticia no existente'
+
+    
+    def createComment(self, data):
+        
+        news_exists = db.session.query(modelNews).filter(
+            modelNews.id == data['news_id']
+        ).first()
+        
+        if news_exists != None:
+            comment = modelComment(
+                content_comment = data['content_comment'],
+                author = news_exists
+            )
+            db.session.add(comment)
+            db.session.commit()
+            db.session.close()
+
+            return 'Comentario agregado'
+        
+        else:
+            return 'No existe la noticia'
