@@ -17,7 +17,7 @@ query = Query()
 app = Flask(__name__)
 
 
-@app.route('/s')
+@app.route('/k')
 def signup():
     return render_template('res.html')
 
