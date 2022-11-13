@@ -1,5 +1,5 @@
 # Flask
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 # Validators
 from utils.validators import Validate
@@ -15,6 +15,11 @@ query = Query()
 
 
 app = Flask(__name__)
+
+
+@app.route('/s')
+def signup():
+    return render_template('res.html')
 
 
 @app.route('/news/create', methods=['POST'])

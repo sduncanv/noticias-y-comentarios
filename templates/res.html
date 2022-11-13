@@ -1,3 +1,10 @@
+{% extends 'base.html' %}
+
+{% block pag %}
+    <h1>Crear noticia</h1>
+{% endblock%}
+
+{% block form %}
 <form action="/news/create" method="post">
     <label for="title">Titulo</label>
     <input type="text" name="title">
@@ -6,3 +13,4 @@
 
     <input type="submit" value="Enviar">
 </form>
+{% endblock%}
